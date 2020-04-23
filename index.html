@@ -495,11 +495,11 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <p>Chrome架构</p>
-<p>浏览器进程。<br>主要负责界面显示、用户交互、子进程管理，同时提供存储等功能。</p>
-<p>渲染进程。<br>核心任务是将 HTML、CSS 和 JavaScript 转换为用户可以与之交互的网页，排版引擎 Blink 和 JavaScript 引擎 V8 都是运行在该进程中，默认情况下，Chrome 会为每个 Tab 标签创建一个渲染进程。出于安全考虑，渲染进程都是运行在沙箱模式下。</p>
-<p>GPU 进程。<br>其实，Chrome 刚开始发布的时候是没有 GPU 进程的。而 GPU 的使用初衷是为了实现 3D CSS 的效果，只是随后网页、Chrome 的 UI 界面都选择采用 GPU 来绘制，这使得 GPU 成为浏览器普遍的需求。最后，Chrome 在其多进程架构上也引入了 GPU 进程。</p>
-<p>网络进程。<br>主要负责页面的网络资源加载，之前是作为一个模块运行在浏览器进程里面的，直至最近才独立出来，成为一个单独的进程。</p>
-<p>插件进程。<br>主要是负责插件的运行，因插件易崩溃，所以需要通过插件进程来隔离，以保证插件进程崩溃不会对浏览器和页面造成影响。</p>
+<h2 id="浏览器进程。"><a href="#浏览器进程。" class="headerlink" title="浏览器进程。"></a>浏览器进程。</h2><p>主要负责界面显示、用户交互、子进程管理，同时提供存储等功能。</p>
+<h2 id="渲染进程。"><a href="#渲染进程。" class="headerlink" title="渲染进程。"></a>渲染进程。</h2><p>核心任务是将 HTML、CSS 和 JavaScript 转换为用户可以与之交互的网页，排版引擎 Blink 和 JavaScript 引擎 V8 都是运行在该进程中，默认情况下，Chrome 会为每个 Tab 标签创建一个渲染进程。出于安全考虑，渲染进程都是运行在沙箱模式下。</p>
+<h2 id="GPU-进程。"><a href="#GPU-进程。" class="headerlink" title="GPU 进程。"></a>GPU 进程。</h2><p>其实，Chrome 刚开始发布的时候是没有 GPU 进程的。而 GPU 的使用初衷是为了实现 3D CSS 的效果，只是随后网页、Chrome 的 UI 界面都选择采用 GPU 来绘制，这使得 GPU 成为浏览器普遍的需求。最后，Chrome 在其多进程架构上也引入了 GPU 进程。</p>
+<h2 id="网络进程。"><a href="#网络进程。" class="headerlink" title="网络进程。"></a>网络进程。</h2><p>主要负责页面的网络资源加载，之前是作为一个模块运行在浏览器进程里面的，直至最近才独立出来，成为一个单独的进程。</p>
+<h2 id="插件进程。"><a href="#插件进程。" class="headerlink" title="插件进程。"></a>插件进程。</h2><p>主要是负责插件的运行，因插件易崩溃，所以需要通过插件进程来隔离，以保证插件进程崩溃不会对浏览器和页面造成影响。</p>
 
       
 
@@ -566,9 +566,9 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="服务端模版引擎"><a href="#服务端模版引擎" class="headerlink" title="服务端模版引擎"></a>服务端模版引擎</h1><p>ExpressJS、<br>Nunjucks、<br>Velocity 、<br>Enjoy、<br>Jsp、<br>freemarker、<br>velocity、<br>thymeleaf<br>Enjoy</p>
-<h1 id="客户端模版引擎"><a href="#客户端模版引擎" class="headerlink" title="客户端模版引擎"></a>客户端模版引擎</h1><p>BaiduTemplate<br>EJS<br>Mustache<br>Handlebars<br>Nunjucks<br>Underscore<br>Pug<br>Marko<br>Jade<br>JsRender<br>Squirrelly<br>jQuery Templating<br>ECT<br>Template7<br>Art-template</p>
-<h1 id="模版加载框架"><a href="#模版加载框架" class="headerlink" title="模版加载框架"></a>模版加载框架</h1><p>SeaJS</p>
+        <h2 id="服务端模版引擎"><a href="#服务端模版引擎" class="headerlink" title="服务端模版引擎"></a>服务端模版引擎</h2><p>ExpressJS、<br>Nunjucks、<br>Velocity 、<br>Enjoy、<br>Jsp、<br>freemarker、<br>velocity、<br>thymeleaf<br>Enjoy</p>
+<h2 id="客户端模版引擎"><a href="#客户端模版引擎" class="headerlink" title="客户端模版引擎"></a>客户端模版引擎</h2><p>BaiduTemplate<br>EJS<br>Mustache<br>Handlebars<br>Nunjucks<br>Underscore<br>Pug<br>Marko<br>Jade<br>JsRender<br>Squirrelly<br>jQuery Templating<br>ECT<br>Template7<br>Art-template</p>
+<h2 id="模版加载框架"><a href="#模版加载框架" class="headerlink" title="模版加载框架"></a>模版加载框架</h2><p>SeaJS</p>
 
       
 
@@ -635,16 +635,16 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Express-js"><a href="#Express-js" class="headerlink" title="Express.js"></a>Express.js</h1><p>如果您搜索Node.js Web框架，您肯定会经常看到Express.js。Express.js是<strong><em>Node.js框架之一，并非没有理由 - 许多开发人员喜欢它来创建一个有效的平台来构建健壮的应用程序和API。它是众所周知的MEAN堆栈（MongoDB，Express，Angular和Node.js）的四个组件之一，它是一个经常用于构建Web应用程序的工具集。<br>Express.js是Node.js</em></strong>的Web框架之一，拥有一套出色的文档，并享有很好的社区支持。这意味着您可以轻松找到Express.js的可重用组件和库。此外，它不需要使用特定的开发实践或特定工具，因此JavaScript开发人员可以获得***的自由。</p>
-<h1 id="Koa2"><a href="#Koa2" class="headerlink" title="Koa2"></a>Koa2</h1><p>Koa2是Koa框架的第二个版本。Koa是创建Express.js的同一团队的产品; 然而，它与Express.js有很大的不同，并没有那么受欢迎。它现在正处于大量开发的过程中，版本2是该框架的稳定版本。<br>Koa2属于Node.js MVC框架系列，其中MVC代表模型 - 视图 - 控制器。MVC的三个组件是作为应用程序数据的模型，视图是通过app UI的数据表示，控制器在模型和视图之间传递请求和更新。<br>国内有很多框架是基于Koa2开发的，比如阿里的Egg.js。ThinkJS等</p>
-<h1 id="Sails-js"><a href="#Sails-js" class="headerlink" title="Sails.js"></a>Sails.js</h1><p>Sails.js是Node.js的另一个MVC框架，它也是由Express.js背后的团队创建的。框架默认支持Socket.io，这使其成为社交媒体应用，消息传递工具和协作软件解决方案的***选择之一。</p>
-<h1 id="NestJS"><a href="#NestJS" class="headerlink" title="NestJS"></a>NestJS</h1><p>NestJS是Node.js框架中的新手。它专注于服务器端脚本，旨在构建服务器端应用程序。NestJS与其他Node.js Web应用程序框架的不同之处在于它使用TypeScript，TypeScript是JavaScript的特殊超集作为其编程语言。如果您熟悉Angular，它也使用TypeScript，那么使用NestJS构建后端没有问题，因为组件和语法看起来非常熟悉。<br>有开发服务器渲染的同学应该对这个很熟悉。</p>
-<h1 id="LoopBack"><a href="#LoopBack" class="headerlink" title="LoopBack"></a>LoopBack</h1><p>LoopBack是Express.js团队的另一个创建，基于Express.js开发。Loopback是API框架，允许您构建适用于任何客户端的API，并且可以连接各种设备。</p>
-<h1 id="Meteor-js"><a href="#Meteor-js" class="headerlink" title="Meteor.js"></a>Meteor.js</h1><p>***的全栈框架之一，可以轻松，直接地创建实时应用程序。优点在于它在服务器端和客户端使用相同的API，从而提高了整体应用程序性能。</p>
-<h1 id="Derby-js"><a href="#Derby-js" class="headerlink" title="Derby.js"></a>Derby.js</h1><p>Derby.js属于MVC框架，可用于客户端和服务器端脚本开发。</p>
-<h1 id="Hapi-js"><a href="#Hapi-js" class="headerlink" title="Hapi.js"></a>Hapi.js</h1><p>与我们在这里提到的许多其他框架不同，Hapi.js与Express.js无关，因此可能被认为是其竞争对手之一。Hapi.js最初是为了支持大型分布式团队的工作而创建的，该框架被认为是由大型分布式团队构建的企业级应用程序的***选择。<br>Hapi.js通过专注于插件来实现出色的协作可能性，这些插件允许在不影响应用程序其余部分的情况下处理单独的组件。该框架非常适合创建可重用的组件，以帮助企业缩短开发时间。<br>Hapi.js框架被用于为沃尔玛 零售连锁店，雅虎 网络服务提供商构建网络应用程序和网站，以及英国政府，信不信由你。</p>
-<h1 id="Mean-io"><a href="#Mean-io" class="headerlink" title="Mean.io"></a>Mean.io</h1><p>Mean.io是另一个全栈框架，从它的名字可以看出它使用的是哪个堆栈。它提供了开箱即用的开始应用程序开发所需的一切，因此使用Mean.io可以立即开始工作。由于它是一个完整的开发堆栈，因此无需选择单独的组件并进行实验。此外，此框架中使用的所有工具都可以立即配置为一起使用。</p>
-<h1 id="Total-js"><a href="#Total-js" class="headerlink" title="Total.js"></a>Total.js</h1><p>一个MVC服务器端框架，非常适合创建Web应用程序。它在与支持MongoDB，MySQL，PostgreSQL的各种数据库的兼容性方面非常灵活，并且适用于许多前端网络，例如Angular，React和Ember。<br>Total.js非常适合以相对较低的维护成本创建响应式应用程序，并且可以依赖它来提供足够的可伸缩性和性能。</p>
+        <h2 id="Express-js"><a href="#Express-js" class="headerlink" title="Express.js"></a>Express.js</h2><p>如果您搜索Node.js Web框架，您肯定会经常看到Express.js。Express.js是***Node.js框架之一，并非没有理由 - 许多开发人员喜欢它来创建一个有效的平台来构建健壮的应用程序和API。它是众所周知的MEAN堆栈（MongoDB，Express，Angular和Node.js）的四个组件之一，它是一个经常用于构建Web应用程序的工具集。<br>Express.js是Node.js的Web框架之一，拥有一套出色的文档，并享有很好的社区支持。这意味着您可以轻松找到Express.js的可重用组件和库。此外，它不需要使用特定的开发实践或特定工具，因此JavaScript开发人员可以获得的自由。</p>
+<h2 id="Koa2"><a href="#Koa2" class="headerlink" title="Koa2"></a>Koa2</h2><p>Koa2是Koa框架的第二个版本。Koa是创建Express.js的同一团队的产品; 然而，它与Express.js有很大的不同，并没有那么受欢迎。它现在正处于大量开发的过程中，版本2是该框架的稳定版本。<br>Koa2属于Node.js MVC框架系列，其中MVC代表模型 - 视图 - 控制器。MVC的三个组件是作为应用程序数据的模型，视图是通过app UI的数据表示，控制器在模型和视图之间传递请求和更新。<br>国内有很多框架是基于Koa2开发的，比如阿里的Egg.js。ThinkJS等</p>
+<h2 id="Sails-js"><a href="#Sails-js" class="headerlink" title="Sails.js"></a>Sails.js</h2><p>Sails.js是Node.js的另一个MVC框架，它也是由Express.js背后的团队创建的。框架默认支持Socket.io，这使其成为社交媒体应用，消息传递工具和协作软件解决方案的***选择之一。</p>
+<h2 id="NestJS"><a href="#NestJS" class="headerlink" title="NestJS"></a>NestJS</h2><p>NestJS是Node.js框架中的新手。它专注于服务器端脚本，旨在构建服务器端应用程序。NestJS与其他Node.js Web应用程序框架的不同之处在于它使用TypeScript，TypeScript是JavaScript的特殊超集作为其编程语言。如果您熟悉Angular，它也使用TypeScript，那么使用NestJS构建后端没有问题，因为组件和语法看起来非常熟悉。<br>有开发服务器渲染的同学应该对这个很熟悉。</p>
+<h2 id="LoopBack"><a href="#LoopBack" class="headerlink" title="LoopBack"></a>LoopBack</h2><p>LoopBack是Express.js团队的另一个创建，基于Express.js开发。Loopback是API框架，允许您构建适用于任何客户端的API，并且可以连接各种设备。</p>
+<h2 id="Meteor-js"><a href="#Meteor-js" class="headerlink" title="Meteor.js"></a>Meteor.js</h2><p>***的全栈框架之一，可以轻松，直接地创建实时应用程序。优点在于它在服务器端和客户端使用相同的API，从而提高了整体应用程序性能。</p>
+<h2 id="Derby-js"><a href="#Derby-js" class="headerlink" title="Derby.js"></a>Derby.js</h2><p>Derby.js属于MVC框架，可用于客户端和服务器端脚本开发。</p>
+<h2 id="Hapi-js"><a href="#Hapi-js" class="headerlink" title="Hapi.js"></a>Hapi.js</h2><p>与我们在这里提到的许多其他框架不同，Hapi.js与Express.js无关，因此可能被认为是其竞争对手之一。Hapi.js最初是为了支持大型分布式团队的工作而创建的，该框架被认为是由大型分布式团队构建的企业级应用程序的***选择。<br>Hapi.js通过专注于插件来实现出色的协作可能性，这些插件允许在不影响应用程序其余部分的情况下处理单独的组件。该框架非常适合创建可重用的组件，以帮助企业缩短开发时间。<br>Hapi.js框架被用于为沃尔玛 零售连锁店，雅虎 网络服务提供商构建网络应用程序和网站，以及英国政府，信不信由你。</p>
+<h2 id="Mean-io"><a href="#Mean-io" class="headerlink" title="Mean.io"></a>Mean.io</h2><p>Mean.io是另一个全栈框架，从它的名字可以看出它使用的是哪个堆栈。它提供了开箱即用的开始应用程序开发所需的一切，因此使用Mean.io可以立即开始工作。由于它是一个完整的开发堆栈，因此无需选择单独的组件并进行实验。此外，此框架中使用的所有工具都可以立即配置为一起使用。</p>
+<h2 id="Total-js"><a href="#Total-js" class="headerlink" title="Total.js"></a>Total.js</h2><p>一个MVC服务器端框架，非常适合创建Web应用程序。它在与支持MongoDB，MySQL，PostgreSQL的各种数据库的兼容性方面非常灵活，并且适用于许多前端网络，例如Angular，React和Ember。<br>Total.js非常适合以相对较低的维护成本创建响应式应用程序，并且可以依赖它来提供足够的可伸缩性和性能。</p>
 
       
 
