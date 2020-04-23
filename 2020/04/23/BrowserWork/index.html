@@ -15,12 +15,12 @@
 <meta property="og:site_name" content="Naraku的博客">
 <meta property="og:description" content="Chrome架构   浏览器进程。主要负责界面显示、用户交互、子进程管理，同时提供存储等功能。 渲染进程。核心任务是将 HTML、CSS 和 JavaScript 转换为用户可以与之交互的网页，排版引擎 Blink 和 JavaScript 引擎 V8 都是运行在该进程中，默认情况下，Chrome 会为每个 Tab 标签创建一个渲染进程。出于安全考虑，渲染进程都是运行在沙箱模式下。 GPU 进程。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/2020/04/23/BrowserWork/BrowserWork/download-2.png">
-<meta property="og:image" content="http://yoursite.com/2020/04/23/BrowserWork/BrowserWork/download.png">
-<meta property="og:image" content="http://yoursite.com/2020/04/23/BrowserWork/BrowserWork/download-1.png">
-<meta property="og:image" content="http://yoursite.com/2020/04/23/BrowserWork/BrowserWork/browser.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/23/BrowserWork/download-2.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/23/BrowserWork/download.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/23/BrowserWork/download-1.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/23/BrowserWork/browser.png">
 <meta property="article:published_time" content="2020-04-23T02:16:05.000Z">
-<meta property="article:modified_time" content="2020-04-23T05:47:04.404Z">
+<meta property="article:modified_time" content="2020-04-23T07:52:30.879Z">
 <meta property="article:author" content="Ji Yin Liu">
 <meta property="article:tag" content="前端">
 <meta property="article:tag" content="js">
@@ -41,7 +41,7 @@
 <meta property="article:tag" content="Geek">
 <meta property="article:tag" content="html">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/04/23/BrowserWork/BrowserWork/download-2.png">
+<meta name="twitter:image" content="http://yoursite.com/2020/04/23/BrowserWork/download-2.png">
   
     <link rel="alternative" href="/atom.xml" title="Naraku的博客" type="application/atom+xml">
   
@@ -241,14 +241,14 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <p>Chrome架构</p>
-<p><img src="./BrowserWork/download-2.png" alt="早期 Chrome 进程架构图"><br><img src="./BrowserWork/download.png" alt="最新的 Chrome 进程架构图"></p>
-<p><img src="./BrowserWork/download-1.png" alt="Chrome面向服务的架构进程模型图"></p>
+<p><img src="../BrowserWork/download-2.png" alt="早期 Chrome 进程架构图"><br><img src="../BrowserWork/download.png" alt="最新的 Chrome 进程架构图"></p>
+<p><img src="../BrowserWork/download-1.png" alt="Chrome面向服务的架构进程模型图"></p>
 <h2 id="浏览器进程。"><a href="#浏览器进程。" class="headerlink" title="浏览器进程。"></a>浏览器进程。</h2><p>主要负责界面显示、用户交互、子进程管理，同时提供存储等功能。</p>
 <h2 id="渲染进程。"><a href="#渲染进程。" class="headerlink" title="渲染进程。"></a>渲染进程。</h2><p>核心任务是将 HTML、CSS 和 JavaScript 转换为用户可以与之交互的网页，排版引擎 Blink 和 JavaScript 引擎 V8 都是运行在该进程中，默认情况下，Chrome 会为每个 Tab 标签创建一个渲染进程。出于安全考虑，渲染进程都是运行在沙箱模式下。</p>
 <h2 id="GPU-进程。"><a href="#GPU-进程。" class="headerlink" title="GPU 进程。"></a>GPU 进程。</h2><p>其实，Chrome 刚开始发布的时候是没有 GPU 进程的。而 GPU 的使用初衷是为了实现 3D CSS 的效果，只是随后网页、Chrome 的 UI 界面都选择采用 GPU 来绘制，这使得 GPU 成为浏览器普遍的需求。最后，Chrome 在其多进程架构上也引入了 GPU 进程。</p>
 <h2 id="网络进程。"><a href="#网络进程。" class="headerlink" title="网络进程。"></a>网络进程。</h2><p>主要负责页面的网络资源加载，之前是作为一个模块运行在浏览器进程里面的，直至最近才独立出来，成为一个单独的进程。</p>
 <h2 id="插件进程。"><a href="#插件进程。" class="headerlink" title="插件进程。"></a>插件进程。</h2><p>主要是负责插件的运行，因插件易崩溃，所以需要通过插件进程来隔离，以保证插件进程崩溃不会对浏览器和页面造成影响。</p>
-<p><img src="./BrowserWork/browser.png" alt="Chrome进程管理"></p>
+<p><img src="../BrowserWork/browser.png" alt="Chrome进程管理"></p>
 
       
 
