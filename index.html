@@ -495,11 +495,14 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <p>Chrome架构</p>
+<p><img src="./BrowserWork/download-2.png" alt="早期 Chrome 进程架构图"><br><img src="./BrowserWork/download.png" alt="最新的 Chrome 进程架构图"></p>
+<p><img src="./BrowserWork/download-1.png" alt="Chrome面向服务的架构进程模型图"></p>
 <h2 id="浏览器进程。"><a href="#浏览器进程。" class="headerlink" title="浏览器进程。"></a>浏览器进程。</h2><p>主要负责界面显示、用户交互、子进程管理，同时提供存储等功能。</p>
 <h2 id="渲染进程。"><a href="#渲染进程。" class="headerlink" title="渲染进程。"></a>渲染进程。</h2><p>核心任务是将 HTML、CSS 和 JavaScript 转换为用户可以与之交互的网页，排版引擎 Blink 和 JavaScript 引擎 V8 都是运行在该进程中，默认情况下，Chrome 会为每个 Tab 标签创建一个渲染进程。出于安全考虑，渲染进程都是运行在沙箱模式下。</p>
 <h2 id="GPU-进程。"><a href="#GPU-进程。" class="headerlink" title="GPU 进程。"></a>GPU 进程。</h2><p>其实，Chrome 刚开始发布的时候是没有 GPU 进程的。而 GPU 的使用初衷是为了实现 3D CSS 的效果，只是随后网页、Chrome 的 UI 界面都选择采用 GPU 来绘制，这使得 GPU 成为浏览器普遍的需求。最后，Chrome 在其多进程架构上也引入了 GPU 进程。</p>
 <h2 id="网络进程。"><a href="#网络进程。" class="headerlink" title="网络进程。"></a>网络进程。</h2><p>主要负责页面的网络资源加载，之前是作为一个模块运行在浏览器进程里面的，直至最近才独立出来，成为一个单独的进程。</p>
 <h2 id="插件进程。"><a href="#插件进程。" class="headerlink" title="插件进程。"></a>插件进程。</h2><p>主要是负责插件的运行，因插件易崩溃，所以需要通过插件进程来隔离，以保证插件进程崩溃不会对浏览器和页面造成影响。</p>
+<p><img src="./BrowserWork/browser.png" alt="Chrome进程管理"></p>
 
       
 
@@ -566,7 +569,7 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="服务端模版引擎"><a href="#服务端模版引擎" class="headerlink" title="服务端模版引擎"></a>服务端模版引擎</h2><p>ExpressJS、<br>Nunjucks、<br>Velocity 、<br>Enjoy、<br>Jsp、<br>freemarker、<br>velocity、<br>thymeleaf<br>Enjoy</p>
+        <h2 id="服务端模版引擎"><a href="#服务端模版引擎" class="headerlink" title="服务端模版引擎"></a>服务端模版引擎</h2><p>ExpressJS<br>Nunjucks<br>Velocity<br>Enjoy<br>Jsp<br>freemarker<br>velocity<br>thymeleaf<br>Enjoy</p>
 <h2 id="客户端模版引擎"><a href="#客户端模版引擎" class="headerlink" title="客户端模版引擎"></a>客户端模版引擎</h2><p>BaiduTemplate<br>EJS<br>Mustache<br>Handlebars<br>Nunjucks<br>Underscore<br>Pug<br>Marko<br>Jade<br>JsRender<br>Squirrelly<br>jQuery Templating<br>ECT<br>Template7<br>Art-template</p>
 <h2 id="模版加载框架"><a href="#模版加载框架" class="headerlink" title="模版加载框架"></a>模版加载框架</h2><p>SeaJS</p>
 
