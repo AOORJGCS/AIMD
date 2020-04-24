@@ -69,7 +69,7 @@ var _hmt = _hmt || [];
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
     <div class="left-col" q-class="show:isShow">
       
-<div class="overlay" style="background: #4d4d4d"></div>
+<div class="overlay" style="background: #4285F4"></div>
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
@@ -132,7 +132,7 @@ var _hmt = _hmt || [];
     <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
       
 <nav id="mobile-nav">
-  	<div class="overlay js-overlay" style="background: #4d4d4d"></div>
+  	<div class="overlay js-overlay" style="background: #4285F4"></div>
 	<div class="btnctn js-mobile-btnctn">
   		<div class="slider-trigger list" q-on="click: openSlider(e)"><i class="icon icon-sort"></i></div>
 	</div>
@@ -364,7 +364,9 @@ var _hmt = _hmt || [];
       
         <h1 id="渲染流程"><a href="#渲染流程" class="headerlink" title="渲染流程"></a>渲染流程</h1><h4 id="默认情况下，Chrome-会为每个页面分配一个渲染进程，也就是说，每打开一个新页面就会配套创建一个新的渲染进程。"><a href="#默认情况下，Chrome-会为每个页面分配一个渲染进程，也就是说，每打开一个新页面就会配套创建一个新的渲染进程。" class="headerlink" title="默认情况下，Chrome 会为每个页面分配一个渲染进程，也就是说，每打开一个新页面就会配套创建一个新的渲染进程。"></a>默认情况下，Chrome 会为每个页面分配一个渲染进程，也就是说，每打开一个新页面就会配套创建一个新的渲染进程。</h4><p>Chrome 的默认策略是，每个标签对应一个渲染进程。但如果从一个页面打开了另一个新页面，而新页面和当前页面属于同一站点的话，那么新页面会复用父页面的渲染进程。官方把这个默认策略叫 process-per-site-instance。</p>
 <p>浏览器进程发出资源请求，等文档数据传输完成之后，渲染进程会返回“确认提交”的消息给浏览器进程。<br>浏览器进程在收到“确认提交”的消息后，会更新浏览器界面状态，包括了安全状态、地址栏的 URL、前进后退的历史状态，并更新 Web 页面。渲染进程便开始页面解析和子资源加载了</p>
-<h2 id="构建-DOM-树"><a href="#构建-DOM-树" class="headerlink" title="构建 DOM 树"></a>构建 DOM 树</h2><h2 id="样式计算（Recalculate-Style）"><a href="#样式计算（Recalculate-Style）" class="headerlink" title="样式计算（Recalculate Style）"></a>样式计算（Recalculate Style）</h2><h3 id="1-CSS-文本转换为浏览器可以理解的结构——styleSheets。"><a href="#1-CSS-文本转换为浏览器可以理解的结构——styleSheets。" class="headerlink" title="1.CSS 文本转换为浏览器可以理解的结构——styleSheets。"></a>1.CSS 文本转换为浏览器可以理解的结构——styleSheets。</h3><h3 id="2-转换样式表中的属性值，使其标准化"><a href="#2-转换样式表中的属性值，使其标准化" class="headerlink" title="2. 转换样式表中的属性值，使其标准化"></a>2. 转换样式表中的属性值，使其标准化</h3><h3 id="3-计算出-DOM-树中每个节点的具体样式"><a href="#3-计算出-DOM-树中每个节点的具体样式" class="headerlink" title="3. 计算出 DOM 树中每个节点的具体样式"></a>3. 计算出 DOM 树中每个节点的具体样式</h3><h2 id="布局阶段"><a href="#布局阶段" class="headerlink" title="布局阶段"></a>布局阶段</h2><h3 id="1-创建布局树"><a href="#1-创建布局树" class="headerlink" title="1. 创建布局树"></a>1. 创建布局树</h3><h3 id="2-布局计算"><a href="#2-布局计算" class="headerlink" title="2. 布局计算"></a>2. 布局计算</h3><h2 id="分层"><a href="#分层" class="headerlink" title="分层"></a>分层</h2><p>  页面中有很多复杂的效果，如一些复杂的 3D 变换、页面滚动，或者使用 z-indexing 做 z 轴排序等，为了更加方便地实现这些效果，渲染引擎还需要为特定的节点生成专用的图层，并生成一棵对应的图层树（LayerTree）。</p>
+<h2 id="构建-DOM-树"><a href="#构建-DOM-树" class="headerlink" title="构建 DOM 树"></a>构建 DOM 树</h2><h2 id="样式计算（Recalculate-Style）"><a href="#样式计算（Recalculate-Style）" class="headerlink" title="样式计算（Recalculate Style）"></a>样式计算（Recalculate Style）</h2><p>   1.CSS 文本转换为浏览器可以理解的结构——styleSheets。<br>   2. 转换样式表中的属性值，使其标准化<br>   3. 计算出 DOM 树中每个节点的具体样式</p>
+<h2 id="布局阶段"><a href="#布局阶段" class="headerlink" title="布局阶段"></a>布局阶段</h2><pre><code>1. 创建布局树
+2. 布局计算</code></pre><h2 id="分层"><a href="#分层" class="headerlink" title="分层"></a>分层</h2><p>  页面中有很多复杂的效果，如一些复杂的 3D 变换、页面滚动，或者使用 z-indexing 做 z 轴排序等，为了更加方便地实现这些效果，渲染引擎还需要为特定的节点生成专用的图层，并生成一棵对应的图层树（LayerTree）。</p>
 <h2 id="图层绘制"><a href="#图层绘制" class="headerlink" title="图层绘制"></a>图层绘制</h2><pre><code>渲染引擎实现图层的绘制与之类似，会把一个图层的绘制拆分成很多小的绘制指令，然后再把这些指令按照顺序组成一个待绘制列表，</code></pre><h2 id="栅格化（raster）操作"><a href="#栅格化（raster）操作" class="headerlink" title="栅格化（raster）操作"></a>栅格化（raster）操作</h2><h3 id="分块、光栅化"><a href="#分块、光栅化" class="headerlink" title="分块、光栅化"></a>分块、光栅化</h3><p>   有的图层可以很大，通过视口，用户只能看到页面的很小一部分，所以在这种情况下，要绘制出所有图层内容的话，就会产生太大的开销，而且也没有必要。合成线程会将图层划分为图块（tile）然后合成线程会按照视口附近的图块来优先生成位图，实际生成位图的操作是由栅格化来执行的。所谓栅格化，是指将图块转换为位图。</p>
 <p>   通常，栅格化过程都会使用 GPU 来加速生成，使用 GPU 生成位图的过程叫快速栅格化，或者 GPU 栅格化，生成的位图被保存在 GPU 内存中。</p>
 <h2 id="合成和显示"><a href="#合成和显示" class="headerlink" title="合成和显示"></a>合成和显示</h2><p>一旦所有图块都被光栅化，合成线程就会生成一个绘制图块的命令——“DrawQuad”，然后将该命令提交给浏览器进程。</p>
