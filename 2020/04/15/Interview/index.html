@@ -8,19 +8,20 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Interview | Naraku的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="数学01 请叙述如何求得平面上任一线直线 f (x) &#x3D; a． x + b 与任一点 P ( x_p, y_p) 的垂直距离? 02 请叙述如何计算两矢量: vector A &#x3D; (x_a, y_a) , vector B &#x3D; ( x_b, y_b) 之间的夹角 θ? 03 请叙述如何判断一个点是否在一个凸多边形里面? JavaScript &#x2F; jQuery04 下方图片为一段动态新增列表项目的">
+  <meta name="description" content="数学01 请叙述如何求得平面上任一线直线 f (x) &#x3D; a． x + b 与任一点 P ( x_p, y_p) 的垂直距离? 02 请叙述如何计算两矢量: vector A &#x3D; (x_a, y_a) , vector B &#x3D; ( x_b, y_b) 之间的夹角 θ? 03 请叙述如何判断一个点是否在一个凸多边形里面?    “Ray-casting Algorithm”，叫“光线投射算法”，简单">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Interview">
 <meta property="og:url" content="http://yoursite.com/2020/04/15/Interview/index.html">
 <meta property="og:site_name" content="Naraku的博客">
-<meta property="og:description" content="数学01 请叙述如何求得平面上任一线直线 f (x) &#x3D; a． x + b 与任一点 P ( x_p, y_p) 的垂直距离? 02 请叙述如何计算两矢量: vector A &#x3D; (x_a, y_a) , vector B &#x3D; ( x_b, y_b) 之间的夹角 θ? 03 请叙述如何判断一个点是否在一个凸多边形里面? JavaScript &#x2F; jQuery04 下方图片为一段动态新增列表项目的">
+<meta property="og:description" content="数学01 请叙述如何求得平面上任一线直线 f (x) &#x3D; a． x + b 与任一点 P ( x_p, y_p) 的垂直距离? 02 请叙述如何计算两矢量: vector A &#x3D; (x_a, y_a) , vector B &#x3D; ( x_b, y_b) 之间的夹角 θ? 03 请叙述如何判断一个点是否在一个凸多边形里面?    “Ray-casting Algorithm”，叫“光线投射算法”，简单">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/2020/04/15/Interview/Interview/Interview1.png">
-<meta property="og:image" content="http://yoursite.com/2020/04/15/Interview/Interview/Interview2.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/04/15/Interview/Interview/Interview3.jpg">
-<meta property="og:image" content="http://yoursite.com/2020/04/15/Interview/Interview/Interview4.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/04/15/Interview/Interview1.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/15/Interview/Interview2.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/04/15/Interview/Interview3.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/04/15/Interview/Interview4.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/04/15/Interview/CSS.png">
 <meta property="article:published_time" content="2020-04-15T06:53:35.000Z">
-<meta property="article:modified_time" content="2020-04-23T08:09:44.880Z">
+<meta property="article:modified_time" content="2020-04-24T06:50:03.703Z">
 <meta property="article:author" content="Ji Yin Liu">
 <meta property="article:tag" content="前端">
 <meta property="article:tag" content="js">
@@ -41,7 +42,7 @@
 <meta property="article:tag" content="Geek">
 <meta property="article:tag" content="html">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/04/15/Interview/Interview/Interview1.png">
+<meta name="twitter:image" content="http://yoursite.com/2020/04/15/Interview/Interview1.png">
   
     <link rel="alternative" href="/atom.xml" title="Naraku的博客" type="application/atom+xml">
   
@@ -240,42 +241,56 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="数学"><a href="#数学" class="headerlink" title="数学"></a>数学</h2><p>01 请叙述如何求得平面上任一线直线 f (x) = a． x + b 与任一点 P ( x_p, y_p) 的垂直距离?</p>
-<p>02 请叙述如何计算两矢量: vector A = (x_a, y_a) , vector B = ( x_b, y_b) 之间的夹角 θ?</p>
-<p>03 请叙述如何判断一个点是否在一个凸多边形里面?</p>
-<h2 id="JavaScript-jQuery"><a href="#JavaScript-jQuery" class="headerlink" title="JavaScript / jQuery"></a>JavaScript / jQuery</h2><p>04 下方图片为一段动态新增列表项目的 code，请问被动态新增出来的 .js-list-item 为什么不会触发 click event？要怎么样修改才能正常执行？<br><img src="/2020/04/15/Interview/Interview/Interview1.png" alt></p>
-<p>05 请说明以下例子的 console.log 会印出什么？请说明为何同样是印 this.name 却有不同的输出结果？<br><img src="/2020/04/15/Interview/Interview/Interview2.jpg" alt></p>
-<p>06 请描述你对 AJAX 的理解</p>
+        <h2 id="数学"><a href="#数学" class="headerlink" title="数学"></a>数学</h2><p><strong>01 请叙述如何求得平面上任一线直线 f (x) = a． x + b 与任一点 P ( x_p, y_p) 的垂直距离?</strong></p>
+<p><strong>02 请叙述如何计算两矢量: vector A = (x_a, y_a) , vector B = ( x_b, y_b) 之间的夹角 θ?</strong></p>
+<p><strong>03 请叙述如何判断一个点是否在一个凸多边形里面?</strong><br>    “Ray-casting Algorithm”，叫“光线投射算法”，简单地说可以这么判断：<br>    从这个点引出一根“射线”，与多边形的任意若干条边相交，累计相交的边的数目，<br>    如果是奇数，那么点就在多边形内，否则点就在多边形外。</p>
+<h2 id="JavaScript-jQuery"><a href="#JavaScript-jQuery" class="headerlink" title="JavaScript / jQuery"></a>JavaScript / jQuery</h2><p><strong>04 下方图片为一段动态新增列表项目的 code，请问被动态新增出来的 .js-list-item 为什么不会触发 click event？要怎么样修改才能正常执行？</strong><br><img src="/2020/04/15/Interview/Interview1.png" alt></p>
+<p><strong>05 请说明以下例子的 console.log 会印出什么？请说明为何同样是印 this.name 却有不同的输出结果？</strong><br><img src="/2020/04/15/Interview/Interview2.jpg" alt></p>
+<p><strong>06 请描述你对 AJAX 的理解？</strong></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
-<p>07 请比较 CSS 动画与 JavaScript 动画之间的差异，并举出你选择使用 CSS 动画与 JS 动画的例子与原因。</p>
-<p>08 请写出下方程式码的结果？<br><img src="/2020/04/15/Interview/Interview/Interview3.jpg" alt></p>
-<p>09 请写出打印出来的结果?<br><img src="/2020/04/15/Interview/Interview/Interview4.jpg" alt></p>
-<h2 id="研发相关"><a href="#研发相关" class="headerlink" title="研发相关"></a>研发相关</h2><p>10 当一个事件被频繁触发，例如滑鼠移动、scrollbar拉动等，造成画面的不顺畅，请问该如何做优化处理呢?</p>
-<p>11 请设计一个函数，函数名称自订，输入任意两个在 x-y 平面的向量，会回传两矢量的和。 (请自行定义传入与回传的矢量物件形式)</p>
+
+
+
+<p><strong>07 请比较 CSS 动画与 JavaScript 动画之间的差异，并举出你选择使用 CSS 动画与 JS 动画的例子与原因。</strong></p>
+<p><strong>08 请写出下方程式码的结果？</strong><br><img src="/2020/04/15/Interview/Interview3.jpg" alt></p>
+<p><strong>09 请写出打印出来的结果?</strong><br><img src="/2020/04/15/Interview/Interview4.jpg" alt></p>
+<h2 id="研发相关"><a href="#研发相关" class="headerlink" title="研发相关"></a>研发相关</h2><p><strong>10 当一个事件被频繁触发，例如滑鼠移动、scrollbar拉动等，造成画面的不顺畅，请问该如何做优化处理呢?</strong></p>
+<p>函数防抖和节流</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">throttle2</span>(<span class="params">fn, threshold, scope</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> timer;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> context = scope || <span class="keyword">this</span>, args = <span class="built_in">arguments</span>;</span><br><span class="line">        <span class="keyword">if</span> (!timer) &#123;</span><br><span class="line">            timer = setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                fn.apply(context, args);</span><br><span class="line">                timer = <span class="literal">null</span>;</span><br><span class="line">            &#125;, threshold)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p><strong>11 请设计一个函数，函数名称自订，输入任意两个在 x-y 平面的向量，会回传两矢量的和。 (请自行定义传入与回传的矢量物件形式)</strong></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
-<p>12 请设计一个函数，函数名称自订，输入一个数字 n，会回传小于 n 的所有质数的阵列</p>
+<p><strong>12 请设计一个函数，函数名称自订，输入一个数字 n，会回传小于 n 的所有质数的阵列</strong></p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
 
-<p>13 在 JavaScript 中，有什么情况是 immutable，并说明应用?</p>
-<p>14 Temporal Dead Zone(TDZ)，在什么情况下会发生?</p>
-<h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><p>15 请描述 inline element 与 block element ，以及两者之间的差异？</p>
+<p><strong>13 在 JavaScript 中，有什么情况是 immutable，并说明应用?</strong></p>
+<p><strong>14 Temporal Dead Zone(TDZ)，在什么情况下会发生?</strong></p>
+<h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><p><strong>15 请描述 inline element 与 block element ，以及两者之间的差异？</strong></p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">一般情况下，行内元素只能包含数据和其他行内元素。而块级元素可以包含行内元素和其他块级元素。</span><br><span class="line">这种结构上的包含继承区别可以使块级元素创建比行内元素更”大型“的结构。</span><br><span class="line">默认情况下，行内元素不会以新行开始，而块级元素会新起一行。</span><br></pre></td></tr></table></figure>
 
 
 
 
-<p>16 请描述你对 SEO 的理解？另外，在开发时有什么需要注意的？</p>
-<h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h2><p>17 排列出它们在套用 style 时的优先顺序(权重)</p>
-<p>18 你曾用过哪些方法来最佳化你的 CSS 与提高效能？</p>
-<p>19 你曾用过哪些方法来解决跨浏览器相容性的问题？又曾用过什么工具来辅助测试？</p>
+<p><strong>16 请描述你对 SEO 的理解？另外，在开发时有什么需要注意的？</strong><br>    搜索引擎优化，又称为SEO，即Search Engine Optimization，是一种方式：利用搜索引擎的规则提高网站在有关搜索引擎内的自然排名。<br>    目的是让其在行业内占据领先地位，获得品牌收益。很大程度上是网站经营者的一种商业行为，将自己或自己公司的排名前移。<br>    它是一种通过分析搜索引擎的排名规律，了解各种搜索引擎怎样进行搜索、怎样抓取互联网页面、怎样确定特定关键词的搜索结果排名的技术。搜索引擎采用易于被搜索引用的手段，对网站进行有针对性的优化，提高网站在搜索引擎中的自然排名，吸引更多的用户访问网站，提高网站的访问量，提高网站的销售能力和宣传能力，从而提升网站的品牌效应</p>
+<h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h2><p><strong>17 排列出它们在套用 style 时的优先顺序(权重)</strong></p>
+<p><img src="/2020/04/15/Interview/CSS.png" alt></p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/Specificity" target="_blank" rel="noopener">MDN CSS优先级</a><br><a href="https://specifishity.com" target="_blank" rel="noopener">跟多细节</a></p>
+<p><strong>18 你曾用过哪些方法来最佳化你的 CSS 与提高效能？</strong></p>
+<p><strong>19 你曾用过哪些方法来解决跨浏览器相容性的问题？又曾用过什么工具来辅助测试？</strong></p>
 
       
 
