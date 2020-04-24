@@ -8,19 +8,21 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>BrowserWork | Naraku的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Chrome架构   sequential  process一个进程就是一个程序的运行实例， 在传统的操作系统中，进程既是基本的分配单元，也是基本的执行单元。 浏览器进程。主要负责界面显示、用户交互、子进程管理，同时提供存储等功能。 渲染进程。核心任务是将 HTML、CSS 和 JavaScript 转换为用户可以与之交互的网页，排版引擎 Blink 和 JavaScript 引擎 V8 都是运行">
+  <meta name="description" content="Chrome架构为了解决这些问题，在 2016 年，Chrome 官方团队使用“面向服务的架构”（Services Oriented Architecture，简称SOA）的思想设计了新的 Chrome 架构。也就是说 Chrome 整体架构会朝向现代操作系统所采用的“面向服务的架构” 方向发展，原来的各种模块会被重构成独立的服务（Service），每个服务（Service）都可以在独立的进程中运">
 <meta property="og:type" content="article">
 <meta property="og:title" content="BrowserWork">
 <meta property="og:url" content="http://yoursite.com/2020/04/23/BrowserWork/index.html">
 <meta property="og:site_name" content="Naraku的博客">
-<meta property="og:description" content="Chrome架构   sequential  process一个进程就是一个程序的运行实例， 在传统的操作系统中，进程既是基本的分配单元，也是基本的执行单元。 浏览器进程。主要负责界面显示、用户交互、子进程管理，同时提供存储等功能。 渲染进程。核心任务是将 HTML、CSS 和 JavaScript 转换为用户可以与之交互的网页，排版引擎 Blink 和 JavaScript 引擎 V8 都是运行">
+<meta property="og:description" content="Chrome架构为了解决这些问题，在 2016 年，Chrome 官方团队使用“面向服务的架构”（Services Oriented Architecture，简称SOA）的思想设计了新的 Chrome 架构。也就是说 Chrome 整体架构会朝向现代操作系统所采用的“面向服务的架构” 方向发展，原来的各种模块会被重构成独立的服务（Service），每个服务（Service）都可以在独立的进程中运">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/04/23/BrowserWork/chrome2.png">
 <meta property="og:image" content="http://yoursite.com/2020/04/23/BrowserWork/chrome.png">
 <meta property="og:image" content="http://yoursite.com/2020/04/23/BrowserWork/chrome1.png">
 <meta property="og:image" content="http://yoursite.com/2020/04/23/BrowserWork/browser.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/23/BrowserWork/browser.png">
+<meta property="og:image" content="http://yoursite.com/2020/04/23/BrowserWork/Renderer.png">
 <meta property="article:published_time" content="2020-04-23T02:16:05.000Z">
-<meta property="article:modified_time" content="2020-04-24T06:26:46.577Z">
+<meta property="article:modified_time" content="2020-04-24T09:11:00.596Z">
 <meta property="article:author" content="Ji Yin Liu">
 <meta property="article:tag" content="前端">
 <meta property="article:tag" content="js">
@@ -240,16 +242,13 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Chrome架构</p>
-<p><img src="/2020/04/23/BrowserWork/chrome2.png" alt="早期 Chrome 进程架构图"><br><img src="/2020/04/23/BrowserWork/chrome.png" alt="最新的 Chrome 进程架构图"></p>
-<p><img src="/2020/04/23/BrowserWork/chrome1.png" alt="Chrome面向服务的架构进程模型图"></p>
-<h2 id="sequential-process"><a href="#sequential-process" class="headerlink" title="sequential  process"></a>sequential  process</h2><p>一个<a href="https://baike.baidu.com/item/进程" target="_blank" rel="noopener">进程</a>就是一个程序的运行实例， 在传统的操作系统中，进程既是基本的分配单元，也是基本的执行单元。</p>
-<h2 id="浏览器进程。"><a href="#浏览器进程。" class="headerlink" title="浏览器进程。"></a>浏览器进程。</h2><p>主要负责界面显示、用户交互、子进程管理，同时提供存储等功能。</p>
-<h2 id="渲染进程。"><a href="#渲染进程。" class="headerlink" title="渲染进程。"></a>渲染进程。</h2><p>核心任务是将 HTML、CSS 和 JavaScript 转换为用户可以与之交互的网页，排版引擎 Blink 和 JavaScript 引擎 V8 都是运行在该进程中，默认情况下，Chrome 会为每个 Tab 标签创建一个渲染进程。出于安全考虑，渲染进程都是运行在沙箱模式下。</p>
+        <p><strong>Chrome架构</strong><br><img src="/2020/04/23/BrowserWork/chrome2.png" alt="早期 Chrome 进程架构图"><br>为了解决这些问题，在 2016 年，Chrome 官方团队使用“面向服务的架构”（Services Oriented Architecture，简称SOA）的思想设计了新的 Chrome 架构。也就是说 Chrome 整体架构会朝向现代操作系统所采用的“面向服务的架构” 方向发展，原来的各种模块会被重构成独立的服务（Service），每个服务（Service）都可以在独立的进程中运行，访问服务（Service）必须使用定义好的接口，通过 IPC 来通信，从而构建一个更内聚、松耦合、易于维护和扩展的系统<br><img src="/2020/04/23/BrowserWork/chrome.png" alt="最新的 Chrome 进程架构图"><br>Chrome 最终要把 UI、数据库、文件、设备、网络等模块重构为基础服务，类似操作系统底层服务，下面是 Chrome“面向服务的架构”的进程模型图：<br><img src="/2020/04/23/BrowserWork/chrome1.png" alt="Chrome面向服务的架构进程模型图"></p>
+<h2 id="sequential-process"><a href="#sequential-process" class="headerlink" title="sequential  process"></a>sequential  process</h2><p>一个<a href="https://baike.baidu.com/item/进程" target="_blank" rel="noopener">进程</a>就是一个程序的运行实例， 在传统的操作系统中，进程既是基本的分配单元，也是基本的执行单元。<br><img src="/2020/04/23/BrowserWork/browser.png" alt="Chrome进程管理"></p>
+<h2 id="浏览器进程。"><a href="#浏览器进程。" class="headerlink" title="浏览器进程。"></a>浏览器进程。</h2><p>主要负责界面显示、用户交互、子进程管理，同时提供存储等功能。<br><img src="/2020/04/23/BrowserWork/browser.png" alt="浏览器进程"></p>
+<h2 id="渲染进程。"><a href="#渲染进程。" class="headerlink" title="渲染进程。"></a>渲染进程。</h2><p>核心任务是将 HTML、CSS 和 JavaScript 转换为用户可以与之交互的网页，排版引擎 Blink 和 JavaScript 引擎 V8 都是运行在该进程中，默认情况下，Chrome 会为每个 Tab 标签创建一个渲染进程。出于安全考虑，渲染进程都是运行在沙箱模式下。<br><img src="/2020/04/23/BrowserWork/Renderer.png" alt="渲染进程"></p>
 <h2 id="GPU-进程。"><a href="#GPU-进程。" class="headerlink" title="GPU 进程。"></a>GPU 进程。</h2><p>其实，Chrome 刚开始发布的时候是没有 GPU 进程的。而 GPU 的使用初衷是为了实现 3D CSS 的效果，只是随后网页、Chrome 的 UI 界面都选择采用 GPU 来绘制，这使得 GPU 成为浏览器普遍的需求。最后，Chrome 在其多进程架构上也引入了 GPU 进程。</p>
 <h2 id="网络进程。"><a href="#网络进程。" class="headerlink" title="网络进程。"></a>网络进程。</h2><p>主要负责页面的网络资源加载，之前是作为一个模块运行在浏览器进程里面的，直至最近才独立出来，成为一个单独的进程。</p>
 <h2 id="插件进程。"><a href="#插件进程。" class="headerlink" title="插件进程。"></a>插件进程。</h2><p>主要是负责插件的运行，因插件易崩溃，所以需要通过插件进程来隔离，以保证插件进程崩溃不会对浏览器和页面造成影响。</p>
-<p><img src="/2020/04/23/BrowserWork/browser.png" alt="Chrome进程管理"></p>
 
       
 
