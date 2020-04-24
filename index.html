@@ -374,7 +374,7 @@ var _hmt = _hmt || [];
 <p>到这里，经过这一系列的阶段，编写好的 HTML、CSS、JavaScript 等文件，经过浏览器就会显示出漂亮的页面了。</p>
 <h2 id="渲染流程总结"><a href="#渲染流程总结" class="headerlink" title="渲染流程总结"></a>渲染流程总结</h2><p>一个完整的渲染流程大致可总结为如下：</p>
 <p>渲染进程将 HTML 内容转换为能够读懂的DOM 树结构。<br>渲染引擎将 CSS 样式表转化为浏览器可以理解的styleSheets，计算出 DOM 节点的样式。<br>创建布局树，并计算元素的布局信息。<br>对布局树进行分层，并生成分层树。<br>为每个图层生成绘制列表，并将其提交到合成线程。<br>合成线程将图层分成图块，并在光栅化线程池中将图块转换成位图。<br>合成线程发送绘制图块命令DrawQuad给浏览器进程。<br>浏览器进程根据 DrawQuad 消息生成页面，并显示到显示器上。</p>
-<p><img src="../Renderer/Renderer3.png" alt="渲染流水线"></p>
+<p><img src="/2020/04/23/BrowserWork-render/Renderer/Renderer3.png" alt="渲染流水线"></p>
 <h2 id="更新了元素的几何属性（重排）"><a href="#更新了元素的几何属性（重排）" class="headerlink" title="更新了元素的几何属性（重排）"></a>更新了元素的几何属性（重排）</h2><p>  通过 JavaScript 或者 CSS 修改元素的几何位置属性，例如改变元素的宽度、高度等，那么浏览器会触发重新布局，解析之后的一系列子阶段，这个过程就叫重排。重排需要更新完整的渲染流水线，所以开销也是最大的。</p>
 <h2 id="更新元素的绘制属性（重绘）"><a href="#更新元素的绘制属性（重绘）" class="headerlink" title="更新元素的绘制属性（重绘）"></a>更新元素的绘制属性（重绘）</h2><p>   果修改了元素的背景颜色，那么布局阶段将不会被执行，因为并没有引起几何位置的变换，所以就直接进入了绘制阶段，然后执行之后的一系列子阶段，这个过程就叫重绘。相较于重排操作，重绘省去了布局和分层阶段，所以执行效率会比重排操作要高一些。</p>
 <h2 id="直接合成阶段"><a href="#直接合成阶段" class="headerlink" title="直接合成阶段"></a>直接合成阶段</h2><p>我们使用了 CSS 的 transform 来实现动画效果，这可以避开重排和重绘阶段，直接在非主线程上执行合成动画操作。这样的效率是最高的，因为是在非主线程上合成，并没有占用主线程的资源，另外也避开了布局和绘制两个子阶段，所以相对于重绘和重排，合成能大大提升绘制效率。</p>
@@ -577,15 +577,15 @@ var _hmt = _hmt || [];
     <div class="article-entry" itemprop="articleBody">
       
         <p>Chrome架构</p>
-<p><img src="../BrowserWork/chrome2.png" alt="早期 Chrome 进程架构图"><br><img src="../BrowserWork/chrome.png" alt="最新的 Chrome 进程架构图"></p>
-<p><img src="../BrowserWork/chrome1.png" alt="Chrome面向服务的架构进程模型图"></p>
+<p><img src="/2020/04/23/BrowserWork/BrowserWork/chrome2.png" alt="早期 Chrome 进程架构图"><br><img src="/2020/04/23/BrowserWork/BrowserWork/chrome.png" alt="最新的 Chrome 进程架构图"></p>
+<p><img src="/2020/04/23/BrowserWork/BrowserWork/chrome1.png" alt="Chrome面向服务的架构进程模型图"></p>
 <h2 id="sequential-process"><a href="#sequential-process" class="headerlink" title="sequential  process"></a>sequential  process</h2><p>一个<a href="https://baike.baidu.com/item/进程" target="_blank" rel="noopener">进程</a>就是一个程序的运行实例， 在传统的操作系统中，进程既是基本的分配单元，也是基本的执行单元。</p>
 <h2 id="浏览器进程。"><a href="#浏览器进程。" class="headerlink" title="浏览器进程。"></a>浏览器进程。</h2><p>主要负责界面显示、用户交互、子进程管理，同时提供存储等功能。</p>
 <h2 id="渲染进程。"><a href="#渲染进程。" class="headerlink" title="渲染进程。"></a>渲染进程。</h2><p>核心任务是将 HTML、CSS 和 JavaScript 转换为用户可以与之交互的网页，排版引擎 Blink 和 JavaScript 引擎 V8 都是运行在该进程中，默认情况下，Chrome 会为每个 Tab 标签创建一个渲染进程。出于安全考虑，渲染进程都是运行在沙箱模式下。</p>
 <h2 id="GPU-进程。"><a href="#GPU-进程。" class="headerlink" title="GPU 进程。"></a>GPU 进程。</h2><p>其实，Chrome 刚开始发布的时候是没有 GPU 进程的。而 GPU 的使用初衷是为了实现 3D CSS 的效果，只是随后网页、Chrome 的 UI 界面都选择采用 GPU 来绘制，这使得 GPU 成为浏览器普遍的需求。最后，Chrome 在其多进程架构上也引入了 GPU 进程。</p>
 <h2 id="网络进程。"><a href="#网络进程。" class="headerlink" title="网络进程。"></a>网络进程。</h2><p>主要负责页面的网络资源加载，之前是作为一个模块运行在浏览器进程里面的，直至最近才独立出来，成为一个单独的进程。</p>
 <h2 id="插件进程。"><a href="#插件进程。" class="headerlink" title="插件进程。"></a>插件进程。</h2><p>主要是负责插件的运行，因插件易崩溃，所以需要通过插件进程来隔离，以保证插件进程崩溃不会对浏览器和页面造成影响。</p>
-<p><img src="../BrowserWork/browser.png" alt="Chrome进程管理"></p>
+<p><img src="/2020/04/23/BrowserWork/BrowserWork/browser.png" alt="Chrome进程管理"></p>
 
       
 
@@ -867,15 +867,15 @@ var _hmt = _hmt || [];
         <h2 id="数学"><a href="#数学" class="headerlink" title="数学"></a>数学</h2><p>01 请叙述如何求得平面上任一线直线 f (x) = a． x + b 与任一点 P ( x_p, y_p) 的垂直距离?</p>
 <p>02 请叙述如何计算两矢量: vector A = (x_a, y_a) , vector B = ( x_b, y_b) 之间的夹角 θ?</p>
 <p>03 请叙述如何判断一个点是否在一个凸多边形里面?</p>
-<h2 id="JavaScript-jQuery"><a href="#JavaScript-jQuery" class="headerlink" title="JavaScript / jQuery"></a>JavaScript / jQuery</h2><p>04 下方图片为一段动态新增列表项目的 code，请问被动态新增出来的 .js-list-item 为什么不会触发 click event？要怎么样修改才能正常执行？<br><img src="../Interview/Interview1.png" alt=""></p>
-<p>05 请说明以下例子的 console.log 会印出什么？请说明为何同样是印 this.name 却有不同的输出结果？<br><img src="../Interview/Interview2.jpg" alt=""></p>
+<h2 id="JavaScript-jQuery"><a href="#JavaScript-jQuery" class="headerlink" title="JavaScript / jQuery"></a>JavaScript / jQuery</h2><p>04 下方图片为一段动态新增列表项目的 code，请问被动态新增出来的 .js-list-item 为什么不会触发 click event？要怎么样修改才能正常执行？<br><img src="/2020/04/15/Interview/Interview/Interview1.png" alt></p>
+<p>05 请说明以下例子的 console.log 会印出什么？请说明为何同样是印 this.name 却有不同的输出结果？<br><img src="/2020/04/15/Interview/Interview/Interview2.jpg" alt></p>
 <p>06 请描述你对 AJAX 的理解</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 
 <p>07 请比较 CSS 动画与 JavaScript 动画之间的差异，并举出你选择使用 CSS 动画与 JS 动画的例子与原因。</p>
-<p>08 请写出下方程式码的结果？<br><img src="../Interview/Interview3.jpg" alt=""></p>
-<p>09 请写出打印出来的结果?<br><img src="../Interview/Interview4.jpg" alt=""></p>
+<p>08 请写出下方程式码的结果？<br><img src="/2020/04/15/Interview/Interview/Interview3.jpg" alt></p>
+<p>09 请写出打印出来的结果?<br><img src="/2020/04/15/Interview/Interview/Interview4.jpg" alt></p>
 <h2 id="研发相关"><a href="#研发相关" class="headerlink" title="研发相关"></a>研发相关</h2><p>10 当一个事件被频繁触发，例如滑鼠移动、scrollbar拉动等，造成画面的不顺畅，请问该如何做优化处理呢?</p>
 <p>11 请设计一个函数，函数名称自订，输入任意两个在 x-y 平面的向量，会回传两矢量的和。 (请自行定义传入与回传的矢量物件形式)</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
