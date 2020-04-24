@@ -341,79 +341,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-BrowserWork2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/24/BrowserWork2/">BrowserWork2</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/24/BrowserWork2/" class="archive-article-date">
-  
-  	<time datetime="2020-04-24T08:38:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-24</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="宿主环境"><a href="#宿主环境" class="headerlink" title="宿主环境"></a>宿主环境</h1><p>浏览器为 V8 提供基础的消息循环系统、全局变量、Web API<br><img src="/2020/04/24/BrowserWork2/EC1.jpg" alt><br>V8 提供了 ECMAScript 定义的一些对象和一些核心的函数，这包括了 Object、Function、String。<br>除此之外，V8 还提供了垃圾回收器、协程等基础内容，不过这些功能依然需要宿主环境的配合才能完整执行。<br><img src="/2020/04/24/BrowserWork2/EC2.jpg" alt></p>
-<p>包括了堆空间和栈空间、全局执行上下文、全局作用域、内置的内建函数、宿主环境提供的扩展函数和对象，还有消息循环系统。</p>
-<p>准备好运行时环境之后，V8 才可以执行 JavaScript 代码，这包括解析源码、生成字节码、解释执行或者编译执行这一系列操作。</p>
-<h2 id="数据存储空间：堆空间和栈空间"><a href="#数据存储空间：堆空间和栈空间" class="headerlink" title="数据存储空间：堆空间和栈空间"></a>数据存储空间：堆空间和栈空间</h2><p><img src="/2020/04/24/BrowserWork2/stack0.png" alt><br>在 JavaScript 的执行过程中， 主要有三种类型内存空间，分别是代码空间、栈空间和堆空间。</p>
-<p><img src="/2020/04/24/BrowserWork2/stack1.png" alt><br>栈空间主要是用来管理 JavaScript 函数调用的，栈是内存中连续的一块空间，同时栈结构是“先进后出”的策略。<br>栈空间的最大的特点是空间连续，所以在栈中每个元素的地址都是固定的，因此栈空间的查找效率非常高，但是通常在内存中，很难分配到一块很大的连续空间，如果函数调用层过深，那么 V8 就有可能抛出栈溢出的错误。</p>
-<p>堆空间是一种树形的存储结构，用来存储对象类型的离散的数据，在前面的课程中我们也讲过，JavaScript 中除了原生类型的数据，其他的都是对象类型，诸如函数、数组，在浏览器中还有 window 对象、document 对象等，这些都是存在堆空间的。</p>
-<p>在 Chrome 中，只要打开一个渲染进程，渲染进程便会初始化 V8，同时初始化堆空间和栈空间。<br>在函数调用过程中，涉及到上下文相关的内容都会存放在栈上，比如原生类型、引用到的对象的地址、函数的执行状态、this 值等都会存在在栈上。当一个函数执行结束，那么该函数的执行上下文便会被销毁掉。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/24/BrowserWork2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
     <article id="post-Renderer" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -530,6 +457,79 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/04/24/BrowserWork3/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-BrowserWork2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/23/BrowserWork2/">宿主环境</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/23/BrowserWork2/" class="archive-article-date">
+  
+  	<time datetime="2020-04-23T08:38:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-23</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="宿主环境"><a href="#宿主环境" class="headerlink" title="宿主环境"></a>宿主环境</h1><p>浏览器为 V8 提供基础的消息循环系统、全局变量、Web API<br><img src="/2020/04/23/BrowserWork2/EC1.jpg" alt><br>V8 提供了 ECMAScript 定义的一些对象和一些核心的函数，这包括了 Object、Function、String。<br>除此之外，V8 还提供了垃圾回收器、协程等基础内容，不过这些功能依然需要宿主环境的配合才能完整执行。<br><img src="/2020/04/23/BrowserWork2/EC2.jpg" alt></p>
+<p>包括了堆空间和栈空间、全局执行上下文、全局作用域、内置的内建函数、宿主环境提供的扩展函数和对象，还有消息循环系统。</p>
+<p>准备好运行时环境之后，V8 才可以执行 JavaScript 代码，这包括解析源码、生成字节码、解释执行或者编译执行这一系列操作。</p>
+<h2 id="数据存储空间：堆空间和栈空间"><a href="#数据存储空间：堆空间和栈空间" class="headerlink" title="数据存储空间：堆空间和栈空间"></a>数据存储空间：堆空间和栈空间</h2><p><img src="/2020/04/23/BrowserWork2/stack0.png" alt><br>在 JavaScript 的执行过程中， 主要有三种类型内存空间，分别是代码空间、栈空间和堆空间。</p>
+<p><img src="/2020/04/23/BrowserWork2/stack1.png" alt><br>栈空间主要是用来管理 JavaScript 函数调用的，栈是内存中连续的一块空间，同时栈结构是“先进后出”的策略。<br>栈空间的最大的特点是空间连续，所以在栈中每个元素的地址都是固定的，因此栈空间的查找效率非常高，但是通常在内存中，很难分配到一块很大的连续空间，如果函数调用层过深，那么 V8 就有可能抛出栈溢出的错误。</p>
+<p>堆空间是一种树形的存储结构，用来存储对象类型的离散的数据，在前面的课程中我们也讲过，JavaScript 中除了原生类型的数据，其他的都是对象类型，诸如函数、数组，在浏览器中还有 window 对象、document 对象等，这些都是存在堆空间的。</p>
+<p>在 Chrome 中，只要打开一个渲染进程，渲染进程便会初始化 V8，同时初始化堆空间和栈空间。<br>在函数调用过程中，涉及到上下文相关的内容都会存放在栈上，比如原生类型、引用到的对象的地址、函数的执行状态、this 值等都会存在在栈上。当一个函数执行结束，那么该函数的执行上下文便会被销毁掉。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/23/BrowserWork2/">展开全文 >></a>
         </p>
       
 
