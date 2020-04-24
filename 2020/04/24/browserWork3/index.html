@@ -6,14 +6,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>运行时环境 | Naraku的博客</title>
+  <title>BrowserWork3 | Naraku的博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在 Chrome 中，只要打开一个渲染进程，渲染进程便会初始化 V8，同时初始化堆空间和栈空间。 JavaScript 代码的执行流程JavaScript 代码在执行之前需要被 JavaScript 引擎编译，编译完成之后，才会进入执行阶段。JavaScript 代码执行过程中，需要先做变量提升，是因为 JavaScript 代码在执行之前需要先编译。在编译阶段，变量和函数会被存放到变量环境中，变">
+  <meta name="description" content="运行时环境在 Chrome 中，只要打开一个渲染进程，渲染进程便会初始化 V8，同时初始化堆空间和栈空间。 JavaScript 代码的执行流程JavaScript 代码在执行之前需要被 JavaScript 引擎编译，编译完成之后，才会进入执行阶段。JavaScript 代码执行过程中，需要先做变量提升，是因为 JavaScript 代码在执行之前需要先编译。在编译阶段，变量和函数会被存放到变量">
 <meta property="og:type" content="article">
-<meta property="og:title" content="运行时环境">
+<meta property="og:title" content="BrowserWork3">
 <meta property="og:url" content="http://yoursite.com/2020/04/24/BrowserWork3/index.html">
 <meta property="og:site_name" content="Naraku的博客">
-<meta property="og:description" content="在 Chrome 中，只要打开一个渲染进程，渲染进程便会初始化 V8，同时初始化堆空间和栈空间。 JavaScript 代码的执行流程JavaScript 代码在执行之前需要被 JavaScript 引擎编译，编译完成之后，才会进入执行阶段。JavaScript 代码执行过程中，需要先做变量提升，是因为 JavaScript 代码在执行之前需要先编译。在编译阶段，变量和函数会被存放到变量环境中，变">
+<meta property="og:description" content="运行时环境在 Chrome 中，只要打开一个渲染进程，渲染进程便会初始化 V8，同时初始化堆空间和栈空间。 JavaScript 代码的执行流程JavaScript 代码在执行之前需要被 JavaScript 引擎编译，编译完成之后，才会进入执行阶段。JavaScript 代码执行过程中，需要先做变量提升，是因为 JavaScript 代码在执行之前需要先编译。在编译阶段，变量和函数会被存放到变量">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/04/24/BrowserWork3/callstack.png">
 <meta property="og:image" content="http://yoursite.com/2020/04/24/BrowserWork3/stack.png">
@@ -25,7 +25,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/04/24/BrowserWork3/outer1.png">
 <meta property="og:image" content="http://yoursite.com/2020/04/24/BrowserWork3/outer2.png">
 <meta property="article:published_time" content="2020-04-24T02:16:06.000Z">
-<meta property="article:modified_time" content="2020-04-24T12:52:35.405Z">
+<meta property="article:modified_time" content="2020-04-24T13:40:37.537Z">
 <meta property="article:author" content="Ji Yin Liu">
 <meta property="article:tag" content="前端">
 <meta property="article:tag" content="js">
@@ -225,7 +225,7 @@ var _hmt = _hmt || [];
         
   
     <h1 class="article-title" itemprop="name">
-      运行时环境
+      BrowserWork3
     </h1>
   
 
@@ -245,7 +245,7 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在 Chrome 中，只要打开一个渲染进程，渲染进程便会初始化 V8，同时初始化堆空间和栈空间。</p>
+        <h1 id="运行时环境"><a href="#运行时环境" class="headerlink" title="运行时环境"></a>运行时环境</h1><p>在 Chrome 中，只要打开一个渲染进程，渲染进程便会初始化 V8，同时初始化堆空间和栈空间。</p>
 <h2 id="JavaScript-代码的执行流程"><a href="#JavaScript-代码的执行流程" class="headerlink" title="JavaScript 代码的执行流程"></a>JavaScript 代码的执行流程</h2><p><strong>JavaScript 代码在执行之前需要被 JavaScript 引擎编译，编译完成之后，才会进入执行阶段。</strong><br>JavaScript 代码执行过程中，需要先做变量提升，是因为 JavaScript 代码在执行之前需要先编译。<br>在编译阶段，变量和函数会被存放到变量环境中，变量的默认值会被设置为 undefined；<br>在代码执行阶段，JavaScript 引擎会从变量环境中去查找自定义的变量和函数。<br>如果在编译阶段，存在两个相同的函数，那么最终存放在变量环境中的是最后定义的那个，这是因为后定义的会覆盖掉之前定义的。</p>
 <p><strong>经过编译后，会生成两部分内容：执行上下文（Execution context）和可执行代码。</strong><br><img src="/2020/04/24/BrowserWork3/callstack.png" alt><br>当 JavaScript 执行全局代码的时候，会编译全局代码并创建全局执行上下文，而且在整个页面的生存周期内，全局执行上下文只有一份。<br>当调用一个函数的时候，函数体内的代码会被编译，并创建函数执行上下文，一般情况下，函数执行结束之后，函数执行上下文会被销毁。<br>当使用 eval 函数的时候，eval 的代码也会被编译，并创建执行上下文。</p>
 <h2 id="调用栈：管理函数调用关系的数据结构"><a href="#调用栈：管理函数调用关系的数据结构" class="headerlink" title="调用栈：管理函数调用关系的数据结构"></a>调用栈：管理函数调用关系的数据结构</h2><p><img src="/2020/04/24/BrowserWork3/stack.png" alt><br>栈是一种非常重要的数据结构，其他的编程语言，如 C/C++、Java、Python 等语言，<br>在执行过程中也都使用了栈来管理函数之间的调用关系。</p>
@@ -374,7 +374,7 @@ var _hmt = _hmt || [];
   
   
     <a href="/2020/04/23/BrowserWork2/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">宿主环境</div>
+      <div class="article-nav-title">BrowserWork2</div>
       <i class="icon-circle-right"></i>
     </a>
   
