@@ -275,6 +275,87 @@ var _hmt = _hmt || [];
 
 
   
+    <article id="post-Runtime" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/24/Runtime/">运行时环境</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/24/Runtime/" class="archive-article-date">
+  
+  	<time datetime="2020-04-24T02:16:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-24</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="运行时环境"><a href="#运行时环境" class="headerlink" title="运行时环境"></a>运行时环境</h1><p>在 Chrome 中，只要打开一个渲染进程，渲染进程便会初始化 V8，同时初始化堆空间和栈空间。</p>
+<h2 id="JavaScript-代码的执行流程"><a href="#JavaScript-代码的执行流程" class="headerlink" title="JavaScript 代码的执行流程"></a>JavaScript 代码的执行流程</h2><p><strong>JavaScript 代码在执行之前需要被 JavaScript 引擎编译，编译完成之后，才会进入执行阶段。</strong><br>JavaScript 代码执行过程中，需要先做变量提升，是因为 JavaScript 代码在执行之前需要先编译。<br>在编译阶段，变量和函数会被存放到变量环境中，变量的默认值会被设置为 undefined；<br>在代码执行阶段，JavaScript 引擎会从变量环境中去查找自定义的变量和函数。<br>如果在编译阶段，存在两个相同的函数，那么最终存放在变量环境中的是最后定义的那个，这是因为后定义的会覆盖掉之前定义的。</p>
+<p><strong>经过编译后，会生成两部分内容：执行上下文（Execution context）和可执行代码。</strong><br><img src="/2020/04/24/Runtime/callstack.png" alt><br>当 JavaScript 执行全局代码的时候，会编译全局代码并创建全局执行上下文，而且在整个页面的生存周期内，全局执行上下文只有一份。<br>当调用一个函数的时候，函数体内的代码会被编译，并创建函数执行上下文，一般情况下，函数执行结束之后，函数执行上下文会被销毁。<br>当使用 eval 函数的时候，eval 的代码也会被编译，并创建执行上下文。</p>
+<h2 id="调用栈：管理函数调用关系的数据结构"><a href="#调用栈：管理函数调用关系的数据结构" class="headerlink" title="调用栈：管理函数调用关系的数据结构"></a>调用栈：管理函数调用关系的数据结构</h2><p><img src="/2020/04/24/Runtime/stack.png" alt><br>栈是一种非常重要的数据结构，其他的编程语言，如 C/C++、Java、Python 等语言，<br>在执行过程中也都使用了栈来管理函数之间的调用关系。</p>
+<p>JavaScript 引擎正是利用栈的这种结构来管理执行上下文的。<br>在执行上下文创建好后，JavaScript 引擎会将执行上下文压入栈中，通常把这种用来管理执行上下文的栈称为执行上下文栈，又称调用栈。<br><img src="/2020/04/24/Runtime/callstack1.png" alt><br><img src="/2020/04/24/Runtime/callstack2.png" alt><br><img src="/2020/04/24/Runtime/callstack3.png" alt></p>
+<h2 id="执行上下文：执行的基础设施"><a href="#执行上下文：执行的基础设施" class="headerlink" title="执行上下文：执行的基础设施"></a>执行上下文：执行的基础设施</h2><p><img src="/2020/04/24/Runtime/AO.png" alt><br>在编译阶段，会生成执行上下文,执行上下文中包含了变量环境、词法环境、外部环境。</p>
+<p>执行上下文是 JavaScript 执行一段代码时的运行环境，比如调用一个函数，就会进入这个函数的执行上下文，确定该函数在执行期间用到的诸如 this、变量、对象以及函数等。</p>
+<p>闭包与普通函数的区别是，它携带了执行的环境，就像人在外星中需要自带吸氧的装备一样，这个函数也带有在程序中生存的环境。</p>
+<p><strong>执行上下文在 ES3 中</strong><br>scope：作用域，也常常被叫做作用域链。<br>variable object：变量对象，用于存储变量的对象。<br>this value：this 值。<br><strong>在 ES5 中</strong><br>把执行上下文最初的三个部分改为下面这个样子。<br>lexical environment：词法环境，当获取变量时使用。<br>variable environment：变量环境，当声明变量时使用。<br>this value：this 值。</p>
+<p><strong>在 ES2018 中</strong><br>this 值被归入 lexical environment，但是增加了不少内容。<br>lexical environment：词法环境，当获取变量或者 this 值时使用。<br>variable environment：变量环境，当声明变量时使用。<br>code evaluation state：用于恢复代码执行位置。<br>Function：执行的任务是函数时使用，表示正在被执行的函数。<br>ScriptOrModule：执行的任务是脚本或者模块时使用，表示正在被执行的代码。<br>Realm：使用的基础库和内置对象实例。Generator：仅生成器上下文有这个属性，表示当前生成器。<br><img src="/2020/04/24/Runtime/FN.png" alt></p>
+<h2 id="作用域（scope）"><a href="#作用域（scope）" class="headerlink" title="作用域（scope）"></a>作用域（scope）</h2><p>作用域是指在程序中定义变量的区域，该位置决定了变量的生命周期。通俗地理解，作用域就是变量与函数的可访问范围，即作用域控制着变量和函数的可见性和生命周期。</p>
+<h2 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h2><p>每个执行上下文的变量环境中，都包含了一个外部引用，用来指向外部的执行上下文，我们把这个外部引用称为outer。函数的 outer 都是指向全局上下文的，这也就意味着如果在 bar 函数或者 foo 函数中使用了外部变量，那么 JavaScript 引擎会去全局执行上下文中查找。我们把这个查找的链条就称为作用域链。</p>
+<p><img src="/2020/04/24/Runtime/outer1.png" alt></p>
+<p><img src="/2020/04/24/Runtime/outer2.png" alt></p>
+<h2 id="词法作用域"><a href="#词法作用域" class="headerlink" title="词法作用域"></a>词法作用域</h2><p>词法作用域就是指作用域是由代码中函数声明的位置来决定的，所以词法作用域是静态的作用域，通过它就能够预测代码在执行过程中如何查找标识符。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/24/Runtime/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
     <article id="post-Renderer" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -327,87 +408,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/04/24/Renderer/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-Runtime" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/24/Runtime/">运行时环境</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/24/Runtime/" class="archive-article-date">
-  
-  	<time datetime="2020-04-24T02:16:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-24</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="运行时环境"><a href="#运行时环境" class="headerlink" title="运行时环境"></a>运行时环境</h1><p>在 Chrome 中，只要打开一个渲染进程，渲染进程便会初始化 V8，同时初始化堆空间和栈空间。</p>
-<h2 id="JavaScript-代码的执行流程"><a href="#JavaScript-代码的执行流程" class="headerlink" title="JavaScript 代码的执行流程"></a>JavaScript 代码的执行流程</h2><p><strong>JavaScript 代码在执行之前需要被 JavaScript 引擎编译，编译完成之后，才会进入执行阶段。</strong><br>JavaScript 代码执行过程中，需要先做变量提升，是因为 JavaScript 代码在执行之前需要先编译。<br>在编译阶段，变量和函数会被存放到变量环境中，变量的默认值会被设置为 undefined；<br>在代码执行阶段，JavaScript 引擎会从变量环境中去查找自定义的变量和函数。<br>如果在编译阶段，存在两个相同的函数，那么最终存放在变量环境中的是最后定义的那个，这是因为后定义的会覆盖掉之前定义的。</p>
-<p><strong>经过编译后，会生成两部分内容：执行上下文（Execution context）和可执行代码。</strong><br><img src="/2020/04/24/Runtime/callstack.png" alt><br>当 JavaScript 执行全局代码的时候，会编译全局代码并创建全局执行上下文，而且在整个页面的生存周期内，全局执行上下文只有一份。<br>当调用一个函数的时候，函数体内的代码会被编译，并创建函数执行上下文，一般情况下，函数执行结束之后，函数执行上下文会被销毁。<br>当使用 eval 函数的时候，eval 的代码也会被编译，并创建执行上下文。</p>
-<h2 id="调用栈：管理函数调用关系的数据结构"><a href="#调用栈：管理函数调用关系的数据结构" class="headerlink" title="调用栈：管理函数调用关系的数据结构"></a>调用栈：管理函数调用关系的数据结构</h2><p><img src="/2020/04/24/Runtime/stack.png" alt><br>栈是一种非常重要的数据结构，其他的编程语言，如 C/C++、Java、Python 等语言，<br>在执行过程中也都使用了栈来管理函数之间的调用关系。</p>
-<p>JavaScript 引擎正是利用栈的这种结构来管理执行上下文的。<br>在执行上下文创建好后，JavaScript 引擎会将执行上下文压入栈中，通常把这种用来管理执行上下文的栈称为执行上下文栈，又称调用栈。<br><img src="/2020/04/24/Runtime/callstack1.png" alt><br><img src="/2020/04/24/Runtime/callstack2.png" alt><br><img src="/2020/04/24/Runtime/callstack3.png" alt></p>
-<h2 id="执行上下文：执行的基础设施"><a href="#执行上下文：执行的基础设施" class="headerlink" title="执行上下文：执行的基础设施"></a>执行上下文：执行的基础设施</h2><p><img src="/2020/04/24/Runtime/AO.png" alt><br>在编译阶段，会生成执行上下文,执行上下文中包含了变量环境、词法环境、外部环境。</p>
-<p>执行上下文是 JavaScript 执行一段代码时的运行环境，比如调用一个函数，就会进入这个函数的执行上下文，确定该函数在执行期间用到的诸如 this、变量、对象以及函数等。</p>
-<p>闭包与普通函数的区别是，它携带了执行的环境，就像人在外星中需要自带吸氧的装备一样，这个函数也带有在程序中生存的环境。</p>
-<p><strong>执行上下文在 ES3 中</strong><br>scope：作用域，也常常被叫做作用域链。<br>variable object：变量对象，用于存储变量的对象。<br>this value：this 值。<br><strong>在 ES5 中</strong><br>把执行上下文最初的三个部分改为下面这个样子。<br>lexical environment：词法环境，当获取变量时使用。<br>variable environment：变量环境，当声明变量时使用。<br>this value：this 值。</p>
-<p><strong>在 ES2018 中</strong><br>this 值被归入 lexical environment，但是增加了不少内容。<br>lexical environment：词法环境，当获取变量或者 this 值时使用。<br>variable environment：变量环境，当声明变量时使用。<br>code evaluation state：用于恢复代码执行位置。<br>Function：执行的任务是函数时使用，表示正在被执行的函数。<br>ScriptOrModule：执行的任务是脚本或者模块时使用，表示正在被执行的代码。<br>Realm：使用的基础库和内置对象实例。Generator：仅生成器上下文有这个属性，表示当前生成器。<br><img src="/2020/04/24/Runtime/FN.png" alt></p>
-<h2 id="作用域（scope）"><a href="#作用域（scope）" class="headerlink" title="作用域（scope）"></a>作用域（scope）</h2><p>作用域是指在程序中定义变量的区域，该位置决定了变量的生命周期。通俗地理解，作用域就是变量与函数的可访问范围，即作用域控制着变量和函数的可见性和生命周期。</p>
-<h2 id="作用域链"><a href="#作用域链" class="headerlink" title="作用域链"></a>作用域链</h2><p>每个执行上下文的变量环境中，都包含了一个外部引用，用来指向外部的执行上下文，我们把这个外部引用称为outer。函数的 outer 都是指向全局上下文的，这也就意味着如果在 bar 函数或者 foo 函数中使用了外部变量，那么 JavaScript 引擎会去全局执行上下文中查找。我们把这个查找的链条就称为作用域链。</p>
-<p><img src="/2020/04/24/Runtime/outer1.png" alt></p>
-<p><img src="/2020/04/24/Runtime/outer2.png" alt></p>
-<h2 id="词法作用域"><a href="#词法作用域" class="headerlink" title="词法作用域"></a>词法作用域</h2><p>词法作用域就是指作用域是由代码中函数声明的位置来决定的，所以词法作用域是静态的作用域，通过它就能够预测代码在执行过程中如何查找标识符。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/24/Runtime/">展开全文 >></a>
         </p>
       
 
