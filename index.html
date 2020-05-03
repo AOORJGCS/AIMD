@@ -215,7 +215,7 @@ var _hmt = _hmt || [];
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/24/V8work/">BrowserWork4</a>
+      <a class="article-title" href="/2020/04/24/V8work/">V8编译流水线</a>
     </h1>
   
 
@@ -289,7 +289,7 @@ var _hmt = _hmt || [];
         
         <a href="/2020/04/24/Renderer/" class="archive-article-date">
   
-  	<time datetime="2020-04-24T06:22:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-24</time>
+  	<time datetime="2020-04-24T02:16:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-24</time>
 </a>
 
         
@@ -297,7 +297,24 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h1 id="渲染流程"><a href="#渲染流程" class="headerlink" title="渲染流程"></a>渲染流程</h1><h4 id="默认情况下，Chrome-会为每个页面分配一个渲染进程，也就是说，每打开一个新页面就会配套创建一个新的渲染进程。"><a href="#默认情况下，Chrome-会为每个页面分配一个渲染进程，也就是说，每打开一个新页面就会配套创建一个新的渲染进程。" class="headerlink" title="默认情况下，Chrome 会为每个页面分配一个渲染进程，也就是说，每打开一个新页面就会配套创建一个新的渲染进程。"></a>默认情况下，Chrome 会为每个页面分配一个渲染进程，也就是说，每打开一个新页面就会配套创建一个新的渲染进程。</h4><p>Chrome 的默认策略是，每个标签对应一个渲染进程。但如果从一个页面打开了另一个新页面，而新页面和当前页面属于同一站点的话，那么新页面会复用父页面的渲染进程。官方把这个默认策略叫 process-per-site-instance。</p>
+<p>浏览器进程发出资源请求，等文档数据传输完成之后，渲染进程会返回“确认提交”的消息给浏览器进程。<br>浏览器进程在收到“确认提交”的消息后，会更新浏览器界面状态，包括了安全状态、地址栏的 URL、前进后退的历史状态，并更新 Web 页面。渲染进程便开始页面解析和子资源加载了</p>
+<h2 id="构建-DOM-树"><a href="#构建-DOM-树" class="headerlink" title="构建 DOM 树"></a>构建 DOM 树</h2><h2 id="样式计算（Recalculate-Style）"><a href="#样式计算（Recalculate-Style）" class="headerlink" title="样式计算（Recalculate Style）"></a>样式计算（Recalculate Style）</h2><p>   1.CSS 文本转换为浏览器可以理解的结构——styleSheets。<br>   2. 转换样式表中的属性值，使其标准化<br>   3. 计算出 DOM 树中每个节点的具体样式</p>
+<h2 id="布局阶段"><a href="#布局阶段" class="headerlink" title="布局阶段"></a>布局阶段</h2><pre><code>1. 创建布局树
+2. 布局计算</code></pre><h2 id="分层"><a href="#分层" class="headerlink" title="分层"></a>分层</h2><p>  页面中有很多复杂的效果，如一些复杂的 3D 变换、页面滚动，或者使用 z-indexing 做 z 轴排序等，为了更加方便地实现这些效果，渲染引擎还需要为特定的节点生成专用的图层，并生成一棵对应的图层树（LayerTree）。</p>
+<p><img src="/2020/04/24/Renderer/tucen.png" alt="渲染流水线"></p>
+<h2 id="图层绘制"><a href="#图层绘制" class="headerlink" title="图层绘制"></a>图层绘制</h2><pre><code>渲染引擎实现图层的绘制与之类似，会把一个图层的绘制拆分成很多小的绘制指令，然后再把这些指令按照顺序组成一个待绘制列表，</code></pre><h2 id="栅格化（raster）操作"><a href="#栅格化（raster）操作" class="headerlink" title="栅格化（raster）操作"></a>栅格化（raster）操作</h2><h3 id="分块、光栅化"><a href="#分块、光栅化" class="headerlink" title="分块、光栅化"></a>分块、光栅化</h3><p>   有的图层可以很大，通过视口，用户只能看到页面的很小一部分，所以在这种情况下，要绘制出所有图层内容的话，就会产生太大的开销，而且也没有必要。合成线程会将图层划分为图块（tile）然后合成线程会按照视口附近的图块来优先生成位图，实际生成位图的操作是由栅格化来执行的。所谓栅格化，是指将图块转换为位图。</p>
+<p>   通常，栅格化过程都会使用 GPU 来加速生成，使用 GPU 生成位图的过程叫快速栅格化，或者 GPU 栅格化，生成的位图被保存在 GPU 内存中。</p>
+<h2 id="合成和显示"><a href="#合成和显示" class="headerlink" title="合成和显示"></a>合成和显示</h2><p>一旦所有图块都被光栅化，合成线程就会生成一个绘制图块的命令——“DrawQuad”，然后将该命令提交给浏览器进程。</p>
+<p>浏览器进程里面有一个叫 viz 的组件，用来接收合成线程发过来的 DrawQuad 命令，然后根据 DrawQuad 命令，将其页面内容绘制到内存中，最后再将内存显示在屏幕上。</p>
+<p>到这里，经过这一系列的阶段，编写好的 HTML、CSS、JavaScript 等文件，经过浏览器就会显示出漂亮的页面了。</p>
+<h2 id="渲染流程总结"><a href="#渲染流程总结" class="headerlink" title="渲染流程总结"></a>渲染流程总结</h2><p>一个完整的渲染流程大致可总结为如下：</p>
+<p>渲染进程将 HTML 内容转换为能够读懂的DOM 树结构。<br>渲染引擎将 CSS 样式表转化为浏览器可以理解的styleSheets，计算出 DOM 节点的样式。<br>创建布局树，并计算元素的布局信息。<br>对布局树进行分层，并生成分层树。<br>为每个图层生成绘制列表，并将其提交到合成线程。<br>合成线程将图层分成图块，并在光栅化线程池中将图块转换成位图。<br>合成线程发送绘制图块命令DrawQuad给浏览器进程。<br>浏览器进程根据 DrawQuad 消息生成页面，并显示到显示器上。</p>
+<p><img src="/2020/04/24/Renderer/Renderer3.png" alt="渲染流水线"></p>
+<h2 id="更新了元素的几何属性（重排）"><a href="#更新了元素的几何属性（重排）" class="headerlink" title="更新了元素的几何属性（重排）"></a>更新了元素的几何属性（重排）</h2><p>  通过 JavaScript 或者 CSS 修改元素的几何位置属性，例如改变元素的宽度、高度等，那么浏览器会触发重新布局，解析之后的一系列子阶段，这个过程就叫重排。重排需要更新完整的渲染流水线，所以开销也是最大的。</p>
+<h2 id="更新元素的绘制属性（重绘）"><a href="#更新元素的绘制属性（重绘）" class="headerlink" title="更新元素的绘制属性（重绘）"></a>更新元素的绘制属性（重绘）</h2><p>   果修改了元素的背景颜色，那么布局阶段将不会被执行，因为并没有引起几何位置的变换，所以就直接进入了绘制阶段，然后执行之后的一系列子阶段，这个过程就叫重绘。相较于重排操作，重绘省去了布局和分层阶段，所以执行效率会比重排操作要高一些。</p>
+<h2 id="直接合成阶段"><a href="#直接合成阶段" class="headerlink" title="直接合成阶段"></a>直接合成阶段</h2><p>我们使用了 CSS 的 transform 来实现动画效果，这可以避开重排和重绘阶段，直接在非主线程上执行合成动画操作。这样的效率是最高的，因为是在非主线程上合成，并没有占用主线程的资源，另外也避开了布局和绘制两个子阶段，所以相对于重绘和重排，合成能大大提升绘制效率。</p>
+
       
 
       
@@ -422,19 +439,19 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-BrowserWork2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-ExecutionContext" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/23/BrowserWork2/">宿主环境</a>
+      <a class="article-title" href="/2020/04/23/ExecutionContext/">宿主环境</a>
     </h1>
   
 
         
-        <a href="/2020/04/23/BrowserWork2/" class="archive-article-date">
+        <a href="/2020/04/23/ExecutionContext/" class="archive-article-date">
   
   	<time datetime="2020-04-23T08:38:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-23</time>
 </a>
@@ -444,11 +461,11 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="宿主环境"><a href="#宿主环境" class="headerlink" title="宿主环境"></a>宿主环境</h1><p>浏览器为 V8 提供基础的消息循环系统、全局变量、Web API<br><img src="/2020/04/23/BrowserWork2/EC1.jpg" alt><br>V8 提供了 ECMAScript 定义的一些对象和一些核心的函数，这包括了 Object、Function、String。<br>除此之外，V8 还提供了垃圾回收器、协程等基础内容，不过这些功能依然需要宿主环境的配合才能完整执行。<br><img src="/2020/04/23/BrowserWork2/EC2.jpg" alt></p>
+        <h1 id="宿主环境"><a href="#宿主环境" class="headerlink" title="宿主环境"></a>宿主环境</h1><p>浏览器为 V8 提供基础的消息循环系统、全局变量、Web API<br><img src="/2020/04/23/ExecutionContext/EC1.jpg" alt><br>V8 提供了 ECMAScript 定义的一些对象和一些核心的函数，这包括了 Object、Function、String。<br>除此之外，V8 还提供了垃圾回收器、协程等基础内容，不过这些功能依然需要宿主环境的配合才能完整执行。<br><img src="/2020/04/23/ExecutionContext/EC2.jpg" alt></p>
 <p>包括了堆空间和栈空间、全局执行上下文、全局作用域、内置的内建函数、宿主环境提供的扩展函数和对象，还有消息循环系统。</p>
 <p>准备好运行时环境之后，V8 才可以执行 JavaScript 代码，这包括解析源码、生成字节码、解释执行或者编译执行这一系列操作。</p>
-<h2 id="数据存储空间：堆空间和栈空间"><a href="#数据存储空间：堆空间和栈空间" class="headerlink" title="数据存储空间：堆空间和栈空间"></a>数据存储空间：堆空间和栈空间</h2><p><img src="/2020/04/23/BrowserWork2/stack0.png" alt><br>在 JavaScript 的执行过程中， 主要有三种类型内存空间，分别是代码空间、栈空间和堆空间。</p>
-<p><img src="/2020/04/23/BrowserWork2/stack1.png" alt><br>栈空间主要是用来管理 JavaScript 函数调用的，栈是内存中连续的一块空间，同时栈结构是“先进后出”的策略。<br>栈空间的最大的特点是空间连续，所以在栈中每个元素的地址都是固定的，因此栈空间的查找效率非常高，但是通常在内存中，很难分配到一块很大的连续空间，如果函数调用层过深，那么 V8 就有可能抛出栈溢出的错误。</p>
+<h2 id="数据存储空间：堆空间和栈空间"><a href="#数据存储空间：堆空间和栈空间" class="headerlink" title="数据存储空间：堆空间和栈空间"></a>数据存储空间：堆空间和栈空间</h2><p><img src="/2020/04/23/ExecutionContext/stack0.png" alt><br>在 JavaScript 的执行过程中， 主要有三种类型内存空间，分别是代码空间、栈空间和堆空间。</p>
+<p><img src="/2020/04/23/ExecutionContext/stack1.png" alt><br>栈空间主要是用来管理 JavaScript 函数调用的，栈是内存中连续的一块空间，同时栈结构是“先进后出”的策略。<br>栈空间的最大的特点是空间连续，所以在栈中每个元素的地址都是固定的，因此栈空间的查找效率非常高，但是通常在内存中，很难分配到一块很大的连续空间，如果函数调用层过深，那么 V8 就有可能抛出栈溢出的错误。</p>
 <p>堆空间是一种树形的存储结构，用来存储对象类型的离散的数据，在前面的课程中我们也讲过，JavaScript 中除了原生类型的数据，其他的都是对象类型，诸如函数、数组，在浏览器中还有 window 对象、document 对象等，这些都是存在堆空间的。</p>
 <p>在 Chrome 中，只要打开一个渲染进程，渲染进程便会初始化 V8，同时初始化堆空间和栈空间。<br>在函数调用过程中，涉及到上下文相关的内容都会存放在栈上，比如原生类型、引用到的对象的地址、函数的执行状态、this 值等都会存在在栈上。当一个函数执行结束，那么该函数的执行上下文便会被销毁掉。</p>
 
@@ -463,90 +480,7 @@ var _hmt = _hmt || [];
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/23/BrowserWork2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-
-
-  
-    <article id="post-BrowserWorkRender" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/04/23/BrowserWorkRender/">BrowserWork_render</a>
-    </h1>
-  
-
-        
-        <a href="/2020/04/23/BrowserWorkRender/" class="archive-article-date">
-  
-  	<time datetime="2020-04-23T02:16:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-23</time>
-</a>
-
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="渲染流程"><a href="#渲染流程" class="headerlink" title="渲染流程"></a>渲染流程</h1><h4 id="默认情况下，Chrome-会为每个页面分配一个渲染进程，也就是说，每打开一个新页面就会配套创建一个新的渲染进程。"><a href="#默认情况下，Chrome-会为每个页面分配一个渲染进程，也就是说，每打开一个新页面就会配套创建一个新的渲染进程。" class="headerlink" title="默认情况下，Chrome 会为每个页面分配一个渲染进程，也就是说，每打开一个新页面就会配套创建一个新的渲染进程。"></a>默认情况下，Chrome 会为每个页面分配一个渲染进程，也就是说，每打开一个新页面就会配套创建一个新的渲染进程。</h4><p>Chrome 的默认策略是，每个标签对应一个渲染进程。但如果从一个页面打开了另一个新页面，而新页面和当前页面属于同一站点的话，那么新页面会复用父页面的渲染进程。官方把这个默认策略叫 process-per-site-instance。</p>
-<p>浏览器进程发出资源请求，等文档数据传输完成之后，渲染进程会返回“确认提交”的消息给浏览器进程。<br>浏览器进程在收到“确认提交”的消息后，会更新浏览器界面状态，包括了安全状态、地址栏的 URL、前进后退的历史状态，并更新 Web 页面。渲染进程便开始页面解析和子资源加载了</p>
-<h2 id="构建-DOM-树"><a href="#构建-DOM-树" class="headerlink" title="构建 DOM 树"></a>构建 DOM 树</h2><h2 id="样式计算（Recalculate-Style）"><a href="#样式计算（Recalculate-Style）" class="headerlink" title="样式计算（Recalculate Style）"></a>样式计算（Recalculate Style）</h2><p>   1.CSS 文本转换为浏览器可以理解的结构——styleSheets。<br>   2. 转换样式表中的属性值，使其标准化<br>   3. 计算出 DOM 树中每个节点的具体样式</p>
-<h2 id="布局阶段"><a href="#布局阶段" class="headerlink" title="布局阶段"></a>布局阶段</h2><pre><code>1. 创建布局树
-2. 布局计算</code></pre><h2 id="分层"><a href="#分层" class="headerlink" title="分层"></a>分层</h2><p>  页面中有很多复杂的效果，如一些复杂的 3D 变换、页面滚动，或者使用 z-indexing 做 z 轴排序等，为了更加方便地实现这些效果，渲染引擎还需要为特定的节点生成专用的图层，并生成一棵对应的图层树（LayerTree）。</p>
-<p><img src="/2020/04/23/BrowserWorkRender/tucen.png" alt="渲染流水线"></p>
-<h2 id="图层绘制"><a href="#图层绘制" class="headerlink" title="图层绘制"></a>图层绘制</h2><pre><code>渲染引擎实现图层的绘制与之类似，会把一个图层的绘制拆分成很多小的绘制指令，然后再把这些指令按照顺序组成一个待绘制列表，</code></pre><h2 id="栅格化（raster）操作"><a href="#栅格化（raster）操作" class="headerlink" title="栅格化（raster）操作"></a>栅格化（raster）操作</h2><h3 id="分块、光栅化"><a href="#分块、光栅化" class="headerlink" title="分块、光栅化"></a>分块、光栅化</h3><p>   有的图层可以很大，通过视口，用户只能看到页面的很小一部分，所以在这种情况下，要绘制出所有图层内容的话，就会产生太大的开销，而且也没有必要。合成线程会将图层划分为图块（tile）然后合成线程会按照视口附近的图块来优先生成位图，实际生成位图的操作是由栅格化来执行的。所谓栅格化，是指将图块转换为位图。</p>
-<p>   通常，栅格化过程都会使用 GPU 来加速生成，使用 GPU 生成位图的过程叫快速栅格化，或者 GPU 栅格化，生成的位图被保存在 GPU 内存中。</p>
-<h2 id="合成和显示"><a href="#合成和显示" class="headerlink" title="合成和显示"></a>合成和显示</h2><p>一旦所有图块都被光栅化，合成线程就会生成一个绘制图块的命令——“DrawQuad”，然后将该命令提交给浏览器进程。</p>
-<p>浏览器进程里面有一个叫 viz 的组件，用来接收合成线程发过来的 DrawQuad 命令，然后根据 DrawQuad 命令，将其页面内容绘制到内存中，最后再将内存显示在屏幕上。</p>
-<p>到这里，经过这一系列的阶段，编写好的 HTML、CSS、JavaScript 等文件，经过浏览器就会显示出漂亮的页面了。</p>
-<h2 id="渲染流程总结"><a href="#渲染流程总结" class="headerlink" title="渲染流程总结"></a>渲染流程总结</h2><p>一个完整的渲染流程大致可总结为如下：</p>
-<p>渲染进程将 HTML 内容转换为能够读懂的DOM 树结构。<br>渲染引擎将 CSS 样式表转化为浏览器可以理解的styleSheets，计算出 DOM 节点的样式。<br>创建布局树，并计算元素的布局信息。<br>对布局树进行分层，并生成分层树。<br>为每个图层生成绘制列表，并将其提交到合成线程。<br>合成线程将图层分成图块，并在光栅化线程池中将图块转换成位图。<br>合成线程发送绘制图块命令DrawQuad给浏览器进程。<br>浏览器进程根据 DrawQuad 消息生成页面，并显示到显示器上。</p>
-<p><img src="/2020/04/23/BrowserWorkRender/Renderer3.png" alt="渲染流水线"></p>
-<h2 id="更新了元素的几何属性（重排）"><a href="#更新了元素的几何属性（重排）" class="headerlink" title="更新了元素的几何属性（重排）"></a>更新了元素的几何属性（重排）</h2><p>  通过 JavaScript 或者 CSS 修改元素的几何位置属性，例如改变元素的宽度、高度等，那么浏览器会触发重新布局，解析之后的一系列子阶段，这个过程就叫重排。重排需要更新完整的渲染流水线，所以开销也是最大的。</p>
-<h2 id="更新元素的绘制属性（重绘）"><a href="#更新元素的绘制属性（重绘）" class="headerlink" title="更新元素的绘制属性（重绘）"></a>更新元素的绘制属性（重绘）</h2><p>   果修改了元素的背景颜色，那么布局阶段将不会被执行，因为并没有引起几何位置的变换，所以就直接进入了绘制阶段，然后执行之后的一系列子阶段，这个过程就叫重绘。相较于重排操作，重绘省去了布局和分层阶段，所以执行效率会比重排操作要高一些。</p>
-<h2 id="直接合成阶段"><a href="#直接合成阶段" class="headerlink" title="直接合成阶段"></a>直接合成阶段</h2><p>我们使用了 CSS 的 transform 来实现动画效果，这可以避开重排和重绘阶段，直接在非主线程上执行合成动画操作。这样的效率是最高的，因为是在非主线程上合成，并没有占用主线程的资源，另外也避开了布局和绘制两个子阶段，所以相对于重绘和重排，合成能大大提升绘制效率。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/04/23/BrowserWorkRender/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/04/23/ExecutionContext/">展开全文 >></a>
         </p>
       
 
@@ -948,6 +882,72 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2020/04/15/Interview/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+
+
+  
+    <article id="post-loader" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/04/09/loader/">loader</a>
+    </h1>
+  
+
+        
+        <a href="/2020/04/09/loader/" class="archive-article-date">
+  
+  	<time datetime="2020-04-09T14:29:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-04-09</time>
+</a>
+
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/04/09/loader/">展开全文 >></a>
         </p>
       
 
